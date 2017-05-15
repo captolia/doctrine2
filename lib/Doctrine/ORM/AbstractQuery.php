@@ -31,6 +31,8 @@ use Doctrine\ORM\ORMInvalidArgumentException;
 /**
  * Base contract for ORM queries. Base class for Query and NativeQuery.
  *
+ * CUSTOMIZED: set HINT_REFRESH as default, so partial queries don't mess up other queries (missing columns)
+ *
  * @link    www.doctrine-project.org
  * @since   2.0
  * @author  Benjamin Eberlei <kontakt@beberlei.de>
@@ -94,7 +96,7 @@ abstract class AbstractQuery
      *
      * @var array
      */
-    protected $_hints = array();
+    protected $_hints = array(Query::HINT_REFRESH => true);
 
     /**
      * The hydration mode.
@@ -161,7 +163,7 @@ abstract class AbstractQuery
     {
         $this->parameters = new ArrayCollection();
 
-        $this->_hints = array();
+        $this->_hints = array(Query::HINT_REFRESH => true);
     }
 
     /**
